@@ -13,14 +13,14 @@ function App() {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
 
-  const initApp = useCallback(async () =>{
+  const initApp = useCallback(async () => {
     try {
       await dispatch(fetchCurrentUser());
       await dispatch(fetchBasketAsync());
-    } catch (error : any) {
+    } catch (error) {
       console.log(error);
     }
-  }, [dispatch])
+  }, [dispatch]);
 
   useEffect(() => {
     initApp().then(() => setLoading(false));

@@ -18,7 +18,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c => 
 {
-    var jwtSecurityScheme = new OpenApiSecurityScheme 
+    var jwtSecurityScheme = new OpenApiSecurityScheme
     {
         BearerFormat = "JWT",
         Name = "Authorization",
@@ -34,6 +34,7 @@ builder.Services.AddSwaggerGen(c =>
     };
 
     c.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
+
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
@@ -63,12 +64,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWTSettings:TokenKey"]))
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.
+                GetBytes(builder.Configuration["JWTSettings:TokenKey"]))
         };
     });
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<TokenService>();
-
+builder.Services.AddScoped<PaymentService>();
 
 var app = builder.Build();
 
@@ -88,6 +90,7 @@ app.UseCors(opt =>
 {
     opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000");
 });
+
 app.UseAuthentication();
 app.UseAuthorization();
 

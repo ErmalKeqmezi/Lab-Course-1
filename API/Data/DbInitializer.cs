@@ -7,10 +7,10 @@ namespace API.Data
     {
         public static async Task Initialize(StoreContext context, UserManager<User> userManager)
         {
-
-            if(!userManager.Users.Any()) 
+            if (!userManager.Users.Any())
             {
-                var user = new User {
+                var user = new User
+                {
                     UserName = "ermal",
                     Email = "ermal@test.com"
                 };
@@ -18,14 +18,16 @@ namespace API.Data
                 await userManager.CreateAsync(user, "Pa$$w0rd");
                 await userManager.AddToRoleAsync(user, "Member");
 
-                 var admin = new User {
+                var admin = new User
+                {
                     UserName = "admin",
                     Email = "admin@test.com"
                 };
 
                 await userManager.CreateAsync(admin, "Pa$$w0rd");
-                await userManager.AddToRolesAsync(admin, new [] {"Member", "Admin"}); 
+                await userManager.AddToRolesAsync(admin, new[] {"Member", "Admin"});
             }
+            
 
             if (context.Products.Any()) return;
 
@@ -155,7 +157,7 @@ namespace API.Data
                 {
                     Name = "MEN'S ADIDAS ORIGINALS OZELIA CASUAL SHOES",
                     Description =
-                        "Take a dive into the 90s adidas archives with the Men's adidas Originals Ozelia Casual Shoes. Rooted in an era full of loud, experimental looks, these chunky throwback kicks still look ahead of their time.",
+                        "Take a dive into the ‘90s adidas archives with the Men's adidas Originals Ozelia Casual Shoes. Rooted in an era full of loud, experimental looks, these chunky throwback kicks still look ahead of their time.",
                     Price = 10000,
                     PictureUrl = "/images/products/product12.jpg",
                     Brand = "Adidas",
@@ -177,7 +179,7 @@ namespace API.Data
                 {
                     Name = "MEN'S PUMA ROMA BASIC CASUAL SHOES",
                     Description =
-                        "With classic marks and a retro inspiration, the Mens Puma Roma Basic Casual Shoes are a must-have sneaker straight from the rich Puma archives. The sleek and timeless silhouette gets updated tech for modern comfort and arrives dipped in bold, fresh colors to bolster your everyday look.",
+                        "With classic marks and a retro inspiration, the Men’s Puma Roma Basic Casual Shoes are a must-have sneaker straight from the rich Puma archives. The sleek and timeless silhouette gets updated tech for modern comfort and arrives dipped in bold, fresh colors to bolster your everyday look.",
                     Price = 7000,
                     PictureUrl = "/images/products/product14.jpg",
                     Brand = "Puma",

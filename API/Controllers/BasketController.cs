@@ -33,7 +33,7 @@ namespace API.Controllers
 
             var product = await _context.Products.FindAsync(productId);
 
-            if (product == null) return BadRequest(new ProblemDetails{Title = "Product not found"});
+            if (product == null) return BadRequest(new ProblemDetails { Title = "Product not found" });
 
             basket.AddItem(product, quantity);
 
@@ -62,7 +62,7 @@ namespace API.Controllers
 
         private async Task<Basket> RetrieveBasket(string buyerId)
         {
-            if(string.IsNullOrEmpty(buyerId)) 
+            if (string.IsNullOrEmpty(buyerId))
             {
                 Response.Cookies.Delete("buyerId");
                 return null;
@@ -82,13 +82,13 @@ namespace API.Controllers
         private Basket CreateBasket()
         {
             var buyerId = User.Identity?.Name;
-            if(string.IsNullOrEmpty(buyerId)) 
+            if (string.IsNullOrEmpty(buyerId))
             {
                 buyerId = Guid.NewGuid().ToString();
                 var cookieOptions = new CookieOptions { IsEssential = true, Expires = DateTime.Now.AddDays(30) };
                 Response.Cookies.Append("buyerId", buyerId, cookieOptions);
             }
-            
+
             var basket = new Basket { BuyerId = buyerId };
             _context.Baskets.Add(basket);
             return basket;

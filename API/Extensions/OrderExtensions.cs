@@ -1,4 +1,3 @@
-
 using API.DTOs;
 using API.Entities.OrderAggregate;
 using Microsoft.EntityFrameworkCore;
@@ -27,7 +26,8 @@ namespace API.Extensions
                         PictureUrl = item.ItemOrdered.PictureUrl,
                         Price = item.Price,
                         Quantity = item.Quantity
-                    }).ToList()
+                    })
+                    .ToList()
                 }).AsNoTracking();
         }
     }
