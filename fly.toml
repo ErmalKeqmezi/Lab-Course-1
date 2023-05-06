@@ -18,6 +18,7 @@ processes = []
   StripeSettings__PublishableKey="pk_test_51N42IeBhugasShotVpLJoNrxAc5tpZtFx4XI6Md4OrSohQc6XCQXYd19VHC3xJ5SLECsmzGzvpzGsL30kHyicRm300MzwVdPuZ"
   Cloudinary__CloudName="dutprsxgk"
   Cloudinary__ApiKey="824928863976137"
+  Cloudinary__SecretKey="3UkxkVom0gymZMHvCup3xRXqL2A"
 
 [experimental]
   auto_rollback = true
