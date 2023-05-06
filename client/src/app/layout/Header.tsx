@@ -63,6 +63,15 @@ export default function Header({ handleThemeChange, darkMode }: Props) {
                             {title.toUpperCase()}
                         </ListItem>
                     ))}
+                    {user && user.roles?.includes('Admin') && 
+                    <ListItem
+                        component={NavLink}
+                        to={'/dashboard'}
+                        sx={navStyles}
+                    >
+                        DASHBOARD
+                    </ListItem>
+                    }
                 </List>
 
                 <Box display='flex' alignItems='center'>

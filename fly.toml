@@ -9,13 +9,15 @@ kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
 
+
 [build]
   image = "ermalkeqmezi/zebra69:latest"
 
 [env]
   ASPNETCORE_URLS="http://+:8080"
   StripeSettings__PublishableKey="pk_test_51N42IeBhugasShotVpLJoNrxAc5tpZtFx4XI6Md4OrSohQc6XCQXYd19VHC3xJ5SLECsmzGzvpzGsL30kHyicRm300MzwVdPuZ"
-
+  Cloudinary__CloudName="dutprsxgk"
+  Cloudinary__ApiKey="824928863976137"
 
 [experimental]
   auto_rollback = true

@@ -2,6 +2,7 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import AboutPage from "../../features/about/AboutPage";
 import Login from "../../features/account/Login";
 import Register from "../../features/account/Register";
+import Dashboard from "../../features/admin/Dashboard";
 import BasketPage from "../../features/basket/BasketPage";
 import Catalog from "../../features/catalog/Catalog";
 import ProductDetails from "../../features/catalog/ProductDetails";
@@ -18,9 +19,14 @@ export const router = createBrowserRouter([
         path: '/',
         element: <App />,
         children: [
-            {element: <RequireAuth />, children: [
+            //Authenticated routes
+                {element: <RequireAuth />, children: [
                 {path: 'checkout', element: <CheckoutWrapper />},
                 {path: 'orders', element: <Orders />},
+            ]},
+            //Admin Routes
+            {element: <RequireAuth roles={['Admin']}/>, children: [
+                {path: 'dashboard', element: <Dashboard />},
             ]},
             {path: 'catalog', element: <Catalog />},
             {path: 'catalog/:id', element: <ProductDetails />},
