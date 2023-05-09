@@ -1,4 +1,9 @@
-import { Container, CssBaseline, ThemeProvider } from "@mui/material";
+import {
+  Container,
+  createTheme,
+  CssBaseline,
+  ThemeProvider,
+} from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -9,25 +14,6 @@ import { useAppDispatch } from "../store/configureStore";
 import { fetchBasketAsync } from "../../features/basket/basketSlice";
 import { fetchCurrentUser } from "../../features/account/accountSlice";
 import HomePage from "../../features/home/HomePage";
-
-import { createTheme } from "@mui/material/styles";
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      light: "#333333",
-      main: "#333333",
-      dark: "#333312",
-      contrastText: "#fff",
-    },
-    secondary: {
-      light: "#333333",
-      main: "#333333",
-      dark: "#333333",
-      contrastText: "#000",
-    },
-  },
-});
 
 function App() {
   const location = useLocation();

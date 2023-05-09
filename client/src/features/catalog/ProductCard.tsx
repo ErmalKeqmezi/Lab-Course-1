@@ -23,7 +23,7 @@ export default function ProductCard({ product }: Props) {
   const dispatch = useAppDispatch();
 
   return (
-    <Card>
+    <Card elevation={8}>
       <CardHeader
         title={product.name}
         titleTypographyProps={{
