@@ -38,7 +38,7 @@ export default function HomePage() {
 
       <Box display="flex" justifyContent="center" sx={{ p: 4 }}>
         <Typography variant="h1" fontFamily={"Zebrafont"} textAlign={"center"}>
-          Welcome to <br /> Zebra69
+          Welcome to <br /> Zebra69 <hr />
         </Typography>
       </Box>
     </>
