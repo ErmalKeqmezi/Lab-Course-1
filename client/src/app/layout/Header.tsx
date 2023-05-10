@@ -17,6 +17,7 @@ import SignedInMenu from "./SignedInMenu";
 import { styled } from "@mui/material/styles";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import logoimg from "./photos/logo.png";
 
 const midLinks = [
   { title: "catalog", path: "/catalog" },
@@ -108,7 +109,7 @@ export default function Header({ handleThemeChange, darkMode }: Props) {
         }}
       >
         <Box display="flex" alignItems="center">
-          <img src="./logo.png" alt="logo" />
+          <img src={logoimg} alt="logo" />
           <Typography
             variant="h6"
             component={NavLink}
