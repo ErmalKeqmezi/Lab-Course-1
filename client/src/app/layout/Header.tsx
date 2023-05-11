@@ -131,7 +131,7 @@ export default function Header({ handleThemeChange, darkMode }: Props) {
             </ListItem>
           ))}
           {user && user.roles?.includes("Admin") && (
-            <ListItem component={NavLink} to={"/dashboard"} sx={navStyles}>
+            <ListItem component={NavLink} to={"/minidrawer"} sx={navStyles}>
               DASHBOARD
             </ListItem>
           )}
