@@ -109,13 +109,10 @@ export default function Header({ handleThemeChange, darkMode }: Props) {
         }}
       >
         <Box display="flex" alignItems="center">
-          <img src={logoimg} alt="logo" />
-          <Typography
-            variant="h6"
-            component={NavLink}
-            to="/"
-            sx={navStyles}
-          ></Typography>
+          <Link to="/">
+            <img src={logoimg} alt="logo" />
+          </Link>
+
           <FormControlLabel
             control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
             label=""
