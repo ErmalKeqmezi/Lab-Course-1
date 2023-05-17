@@ -1,142 +1,217 @@
-import {
-  Typography,
-  Button,
-  TableContainer,
-  Paper,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  Box,
-} from "@mui/material";
-import { Edit, Delete } from "@mui/icons-material";
-import { currencyFormat } from "../../app/util/util";
-import UseProducts from "../../app/hooks/useProducts";
-import AppPagination from "../../app/components/AppPagination";
-import { useAppDispatch } from "../../app/store/configureStore";
-import { deleteProduct, setPageNumber } from "../catalog/catalogSlice";
-import LoadingComponent from "../../app/layout/LoadingComponent";
+import * as React from "react";
 import { useState } from "react";
-import ProductForm from "./ProductForm";
-import { Product } from "../../app/models/product";
-import agent from "../../app/api/agent";
-import { LoadingButton } from "@mui/lab";
+import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import MuiDrawer from "@mui/material/Drawer";
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import List from "@mui/material/List";
+import CssBaseline from "@mui/material/CssBaseline";
+import Typography, { typographyClasses } from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import SellIcon from "@mui/icons-material/Sell";
+import MailIcon from "@mui/icons-material/Mail";
+import PersonIcon from "@mui/icons-material/Person";
+import EqualizerIcon from "@mui/icons-material/Equalizer";
+import { Hidden } from "@mui/material";
+import Header from "../../app/layout/Header";
+import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
+import ErrorIcon from "@mui/icons-material/Error";
+import Dashboard from "./ProductCRUD";
 
-export default function Dashboard() {
-  const { products, metaData, productsLoaded } = UseProducts();
-  const dispatch = useAppDispatch();
-  const [editMode, setEditMode] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<Product | undefined>(
-    undefined
-  );
-  const [loading, setLoading] = useState(false);
-  const [target, setTarget] = useState(0);
+const drawerWidth = 240;
 
-  function handleSelectProduct(product: Product) {
-    setSelectedProduct(product);
-    setEditMode(true);
-  }
+const openedMixin = (theme: Theme): CSSObject => ({
+  marginTop: 83,
+  width: drawerWidth,
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  overflowX: "hidden",
+});
 
-  function handleDeleteProduct(id: number) {
-    setLoading(true);
-    setTarget(id);
-    agent.Admin.deleteProduct(id)
-      .then(() => dispatch(deleteProduct(id)))
-      .catch((error) => console.log(error))
-      .finally(() => setLoading(false));
-  }
+const closedMixin = (theme: Theme): CSSObject => ({
+  marginTop: 83,
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  overflowX: "hidden",
+  width: `calc(${theme.spacing(7)} + 1px)`,
+  [theme.breakpoints.up("sm")]: {
+    width: `calc(${theme.spacing(8)} + 1px)`,
+  },
+});
 
-  function cancelEdit() {
-    if (selectedProduct) setSelectedProduct(undefined);
-    setEditMode(false);
-  }
+const DrawerHeader = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  // justifyContent: "flex-end",
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+}));
 
-  if (editMode)
-    return <ProductForm product={selectedProduct} cancelEdit={cancelEdit} />;
+interface AppBarProps extends MuiAppBarProps {
+  open?: boolean;
+}
 
-  if (!productsLoaded)
-    return <LoadingComponent message="Loading products..." />;
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== "open",
+})<AppBarProps>(({ theme, open }) => ({
+  zIndex: theme.zIndex.drawer + 1,
+  transition: theme.transitions.create(["width", "margin"], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(["width", "margin"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}));
+
+const Drawer = styled(MuiDrawer, {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
+  width: drawerWidth,
+  flexShrink: 0,
+  whiteSpace: "nowrap",
+  boxSizing: "border-box",
+  ...(open && {
+    ...openedMixin(theme),
+    "& .MuiDrawer-paper": openedMixin(theme),
+  }),
+  ...(!open && {
+    ...closedMixin(theme),
+    "& .MuiDrawer-paper": closedMixin(theme),
+  }),
+}));
+
+export default function MiniDrawer() {
+  const theme = useTheme();
+  const [open, setOpen] = React.useState(false);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
+  const [showComponent, setShowComponent] = useState(false);
+
+  const handleButtonClick = () => {
+    setShowComponent(!showComponent);
+  };
+
   return (
-    <>
-      <Box display="flex" justifyContent="space-between">
-        <Typography sx={{ p: 2 }} variant="h4">
-          Inventory
-        </Typography>
-        <Button
-          onClick={() => setEditMode(true)}
-          sx={{ m: 2 }}
-          size="large"
-          variant="contained"
-        >
-          Create
-        </Button>
-      </Box>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>#</TableCell>
-              <TableCell align="left">Product</TableCell>
-              <TableCell align="right">Price</TableCell>
-              <TableCell align="center">Type</TableCell>
-              <TableCell align="center">Brand</TableCell>
-              <TableCell align="center">Quantity</TableCell>
-              <TableCell align="right"></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {products.map((product) => (
-              <TableRow
-                key={product.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+    <Box sx={{ display: "flex" }}>
+      <CssBaseline />
+
+      <AppBar open={open}></AppBar>
+      <Drawer variant="permanent" open={open}>
+        <DrawerHeader>
+          <IconButton
+            color="inherit"
+            // aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            // edge="start"
+            sx={{
+              ...(open && { display: "none" }),
+            }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === "rtl" ? (
+              <ChevronRightIcon />
+            ) : (
+              <ChevronLeftIcon />
+            )}
+          </IconButton>
+        </DrawerHeader>
+        <Divider />
+        <List>
+          {["Dashboard", "Edit Product", "Edit Profile", "Slider Photo"].map(
+            (text, index) => (
+              <ListItem key={text} disablePadding sx={{ display: "block" }}>
+                <ListItemButton
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: open ? "initial" : "center",
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : "auto",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {index === 0 ? (
+                      <EqualizerIcon />
+                    ) : index === 1 ? (
+                      <SellIcon onClick={handleButtonClick} />
+                    ) : index === 2 ? (
+                      <PersonIcon />
+                    ) : index === 3 ? (
+                      <InsertPhotoIcon />
+                    ) : (
+                      <ErrorIcon />
+                    )}
+                  </ListItemIcon>
+                  <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                </ListItemButton>
+              </ListItem>
+            )
+          )}
+        </List>
+        <Divider />
+        <List>
+          {["All mail", "Trash", "Spam"].map((text, index) => (
+            <ListItem key={text} disablePadding sx={{ display: "block" }}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
               >
-                <TableCell component="th" scope="row">
-                  {product.id}
-                </TableCell>
-                <TableCell align="left">
-                  <Box display="flex" alignItems="center">
-                    <img
-                      src={product.pictureUrl}
-                      alt={product.name}
-                      style={{ height: 50, marginRight: 20 }}
-                    />
-                    <span>{product.name}</span>
-                  </Box>
-                </TableCell>
-                <TableCell align="right">
-                  {currencyFormat(product.price)}
-                </TableCell>
-                <TableCell align="center">{product.type}</TableCell>
-                <TableCell align="center">{product.brand}</TableCell>
-                <TableCell align="center">{product.quantityInStock}</TableCell>
-                <TableCell align="right">
-                  <Button
-                    onClick={() => handleSelectProduct(product)}
-                    startIcon={<Edit />}
-                  />
-                  <LoadingButton
-                    loading={loading && target === product.id}
-                    startIcon={<Delete />}
-                    color="error"
-                    onClick={() => handleDeleteProduct(product.id)}
-                  />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      {metaData && (
-        <Box sx={{ pt: 2 }}>
-          <AppPagination
-            metaData={metaData}
-            onPageChange={(page: number) =>
-              dispatch(setPageNumber({ pageNumber: page }))
-            }
-          />
-        </Box>
-      )}
-    </>
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  {index % 2 === 0 ? <EqualizerIcon /> : <MailIcon />}
+                </ListItemIcon>
+                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </Drawer>
+
+      <Box component="main" sx={{ flexGrow: 1, p: 0 }}>
+        <DrawerHeader />
+        {showComponent && <Dashboard />}
+      </Box>
+    </Box>
   );
 }
