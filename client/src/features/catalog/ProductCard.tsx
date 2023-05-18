@@ -31,7 +31,15 @@ export default function ProductCard({ product }: Props) {
   const [value, setValue] = React.useState<number | null>(0);
 
   return (
-    <Card elevation={8}>
+    <Card
+      elevation={8}
+      sx={{
+        "&:hover": {
+          transition: "transform .2s",
+          transform: "scale(1.02)",
+        },
+      }}
+    >
       <CardHeader
         title={product.name}
         titleTypographyProps={{
@@ -39,12 +47,16 @@ export default function ProductCard({ product }: Props) {
         }}
       />
       <CardMedia
+        component={Link}
+        to={`/catalog/${product.id}`}
         sx={{
+          listStyleImage: 0,
           height: 140,
           backgroundSize: "contain",
           bgcolor: "#ededed",
           borderBottom: 0.5,
           borderTop: 0.5,
+          borderBlockColor: "#000000",
         }}
         image={product.pictureUrl}
         title={product.name}
