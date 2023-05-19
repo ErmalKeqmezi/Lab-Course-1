@@ -66,7 +66,7 @@ export default function ProductCard({ product }: Props) {
           gutterBottom
           color="inherit"
           variant="h5"
-          // sx={{ fontWeight: 6 }}
+          sx={{ fontWeight: 6 }}
         >
           <b>{currencyFormat(product.price)}</b>
         </Typography>

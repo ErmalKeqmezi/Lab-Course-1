@@ -117,7 +117,7 @@ export default function ProductDetails() {
                 <TableCell>{product.quantityInStock}</TableCell>
               </TableRow>
             </TableBody>
-            <Typography variant="h4" color="secondary">
+            <Typography variant="h4" color="#000000">
               {(product.price / 100).toFixed(2)}€
             </Typography>
             <br />
