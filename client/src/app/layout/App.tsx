@@ -39,7 +39,7 @@ function App() {
     palette: {
       mode: palleteType,
       background: {
-        default: palleteType === "light" ? "#eaeaea" : "#121212",
+        default: palleteType === "light" ? "#eaeaea" : "#323232",
       },
     },
   });

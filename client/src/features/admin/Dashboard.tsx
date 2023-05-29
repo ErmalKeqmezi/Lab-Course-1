@@ -25,13 +25,14 @@ import { Hidden } from "@mui/material";
 import Header from "../../app/layout/Header";
 import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 import ErrorIcon from "@mui/icons-material/Error";
-import Dashboard from "./ProductCRUD";
+import ProductCrud from "./ProductCRUD";
+import Catalog from "../catalog/Catalog";
 
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
-  marginTop: 83,
   width: drawerWidth,
+  // marginTop: 83,
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -40,7 +41,7 @@ const openedMixin = (theme: Theme): CSSObject => ({
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
-  marginTop: 83,
+  // marginTop: 83,
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -118,6 +119,8 @@ export default function MiniDrawer() {
     setShowComponent(!showComponent);
   };
 
+  const [currentComponent, setCurrentComponent] = useState("dashboard");
+  console.log(currentComponent);
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -166,7 +169,9 @@ export default function MiniDrawer() {
                     {index === 0 ? (
                       <EqualizerIcon />
                     ) : index === 1 ? (
-                      <SellIcon onClick={handleButtonClick} />
+                      <SellIcon
+                        onClick={() => setCurrentComponent("product-crud")}
+                      />
                     ) : index === 2 ? (
                       <PersonIcon />
                     ) : index === 3 ? (
@@ -210,7 +215,9 @@ export default function MiniDrawer() {
 
       <Box component="main" sx={{ flexGrow: 1, p: 0 }}>
         <DrawerHeader />
-        {showComponent && <Dashboard />}
+        {/* {showComponent && <Dashboard />} */}
+        {currentComponent === "product-crud" && <ProductCrud />}
+        {currentComponent === "dashboard" && <Catalog />}
       </Box>
     </Box>
   );
