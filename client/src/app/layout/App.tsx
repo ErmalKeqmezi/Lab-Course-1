@@ -38,8 +38,14 @@ function App() {
   const theme = createTheme({
     palette: {
       mode: palleteType,
+      primary: {
+        main: "#CE1212",
+      },
+      secondary: {
+        main: "#810000",
+      },
       background: {
-        default: palleteType === "light" ? "#eaeaea" : "#323232",
+        default: palleteType === "light" ? "#EEEBDD" : "#1B1717",
       },
     },
   });
