@@ -18,6 +18,7 @@ import { styled } from "@mui/material/styles";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import logoimg from "./photos/logo.png";
+import LoginIcon from "@mui/icons-material/Login";
 
 const midLinks = [
   { title: "catalog", path: "/catalog" },

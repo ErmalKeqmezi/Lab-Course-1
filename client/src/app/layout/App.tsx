@@ -14,6 +14,7 @@ import { useAppDispatch } from "../store/configureStore";
 import { fetchBasketAsync } from "../../features/basket/basketSlice";
 import { fetchCurrentUser } from "../../features/account/accountSlice";
 import HomePage from "../../features/home/HomePage";
+import Footer from "./Footer";
 
 function App() {
   const location = useLocation();
@@ -68,6 +69,7 @@ function App() {
           <Outlet />
         </Container>
       )}
+      <Footer />
     </ThemeProvider>
   );
 }

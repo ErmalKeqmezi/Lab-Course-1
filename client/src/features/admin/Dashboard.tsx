@@ -38,6 +38,8 @@ const openedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.enteringScreen,
   }),
   overflowX: "hidden",
+  marginTop: theme.spacing(10.5),
+  position: "fixed",
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
@@ -51,6 +53,8 @@ const closedMixin = (theme: Theme): CSSObject => ({
   [theme.breakpoints.up("sm")]: {
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
+  marginTop: theme.spacing(10.5),
+  position: "fixed",
 });
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -124,8 +128,8 @@ export default function MiniDrawer() {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-
       <AppBar open={open}></AppBar>
+
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           <IconButton
@@ -212,7 +216,6 @@ export default function MiniDrawer() {
           ))}
         </List>
       </Drawer>
-
       <Box component="main" sx={{ flexGrow: 1, p: 0 }}>
         <DrawerHeader />
         {/* {showComponent && <Dashboard />} */}
