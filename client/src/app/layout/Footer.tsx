@@ -14,7 +14,7 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 const Footer = () => {
   return (
-    <Box sx={{ bgcolor: "#272727", color: "grey.700" }}>
+    <Box sx={{ bgcolor: "#CE1212", mt: 14 }}>
       <Container maxWidth="md" sx={{ py: 6 }}>
         <Stack spacing={4}>
           <Typography>Questions? Call 007-803-321-2130</Typography>
@@ -22,14 +22,34 @@ const Footer = () => {
           <Box>
             <Grid container spacing={1}>
               <Grid item xs={6} md={3}>
-                <InstagramIcon />
-                <FacebookIcon />
-                <YouTubeIcon />
-                <LinkedInIcon />
+                <div style={{ color: "inherit", textDecoration: "none" }}>
+                  <a href="https://instagram.com">
+                    {" "}
+                    <InstagramIcon
+                      sx={{ color: "inherit", textDecoration: "none" }}
+                    />
+                  </a>
+                  <a href="https://facebook.com">
+                    <FacebookIcon />
+                  </a>
+                  <Link to={"https://youtube.com"}>
+                    {/* <a href="https://youtube.com"> */}{" "}
+                    <YouTubeIcon
+                      sx={{ color: "inherit", textDecoration: "none" }}
+                    />
+                    {/* </a> */}
+                  </Link>
+                  <a href="https:/inkedin.com">
+                    <LinkedInIcon />
+                  </a>
+                </div>
               </Grid>
               <Grid item xs={6} md={3}>
                 <Stack spacing={2}>
-                  <Typography>Help Center</Typography>
+                  <Link to={"/"}>
+                    {" "}
+                    <Typography>Help Center</Typography>
+                  </Link>
                   <Typography>Jobs</Typography>
                   <Typography>Cookie Preferences</Typography>
                   <Typography>Legal Notices</Typography>

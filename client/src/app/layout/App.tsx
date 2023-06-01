@@ -15,7 +15,7 @@ import { fetchBasketAsync } from "../../features/basket/basketSlice";
 import { fetchCurrentUser } from "../../features/account/accountSlice";
 import HomePage from "../../features/home/HomePage";
 import Footer from "./Footer";
-
+import TopButton from "./TopButton";
 function App() {
   const location = useLocation();
   const dispatch = useAppDispatch();

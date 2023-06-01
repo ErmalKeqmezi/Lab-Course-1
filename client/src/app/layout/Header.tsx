@@ -19,16 +19,17 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import logoimg from "./photos/logo.png";
 import LoginIcon from "@mui/icons-material/Login";
+import React from "react";
 
 const midLinks = [
-  { title: "catalog", path: "/catalog" },
-  { title: "about", path: "/about" },
-  { title: "contact", path: "/contact" },
+  { title: "catalog", path: "/catalog", className: "mobile-hide" },
+  { title: "about", path: "/about", className: "mobile-hide" },
+  { title: "contact", path: "/contact", className: "mobile-hide" },
 ];
 
 const rightLinks = [
-  { title: "login", path: "/login" },
-  { title: "register", path: "/register" },
+  { title: "login", path: "/login", className: "mobile-hide" },
+  { title: "register", path: "/register", className: "mobile-hide" },
 ];
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
@@ -122,7 +123,7 @@ export default function Header({ handleThemeChange, darkMode }: Props) {
           />
         </Box>
 
-        <List sx={{ display: "flex" }}>
+        <List sx={{ display: "flex" }} className="mobile-links">
           {midLinks.map(({ title, path }) => (
             <ListItem component={NavLink} to={path} key={path} sx={navStyles}>
               {title.toUpperCase()}

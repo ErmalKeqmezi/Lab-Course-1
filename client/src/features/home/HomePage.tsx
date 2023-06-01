@@ -1,11 +1,14 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, createTheme } from "@mui/material";
 import Slider from "react-slick";
 import "./home.css";
+import Banner from "./Banner";
+import { useState } from "react";
 import ProductCard from "../catalog/ProductCard";
 export default function HomePage() {
   const settings = {
     dots: true,
     infinite: true,
+    arrows: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -41,6 +44,10 @@ export default function HomePage() {
         <Typography variant="h1" fontFamily={"Zebrafont"} textAlign={"center"}>
           Welcome to <br /> Zebra69
         </Typography>
+      </Box>
+
+      <Box>
+        <Banner></Banner>
       </Box>
     </>
   );
