@@ -6,6 +6,8 @@ import {
   List,
   ListItem,
   Switch,
+  Theme,
+  useMediaQuery,
   Toolbar,
   Typography,
   Stack,
@@ -20,6 +22,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import logoimg from "./photos/logo.png";
 import LoginIcon from "@mui/icons-material/Login";
 import React from "react";
+import {} from "@mui/material";
+import LongMenu from "./LongMenu";
 
 const midLinks = [
   { title: "catalog", path: "/catalog", className: "mobile-hide" },
@@ -100,6 +104,9 @@ export default function Header({ handleThemeChange, darkMode }: Props) {
   const { basket } = useAppSelector((state) => state.basket);
   const { user } = useAppSelector((state) => state.account);
   const itemCount = basket?.items.reduce((sum, item) => sum + item.quantity, 0);
+  const isMobile = useMediaQuery<Theme>((theme) =>
+    theme.breakpoints.down("sm")
+  );
 
   return (
     <AppBar position="static">
@@ -125,12 +132,29 @@ export default function Header({ handleThemeChange, darkMode }: Props) {
 
         <List sx={{ display: "flex" }} className="mobile-links">
           {midLinks.map(({ title, path }) => (
-            <ListItem component={NavLink} to={path} key={path} sx={navStyles}>
+            <ListItem
+              component={NavLink}
+              to={path}
+              key={path}
+              sx={{
+                ...navStyles,
+                display: isMobile ? "none" : "block",
+                ...(isMobile && { display: "none" }),
+              }}
+            >
               {title.toUpperCase()}
             </ListItem>
           ))}
           {user && user.roles?.includes("Admin") && (
-            <ListItem component={NavLink} to={"/minidrawer"} sx={navStyles}>
+            <ListItem
+              component={NavLink}
+              to={"/minidrawer"}
+              sx={{
+                ...navStyles,
+                display: isMobile ? "none" : "block",
+                ...(isMobile && { display: "none" }),
+              }}
+            >
               DASHBOARD
             </ListItem>
           )}
@@ -143,7 +167,12 @@ export default function Header({ handleThemeChange, darkMode }: Props) {
             size="large"
             edge="start"
             color="inherit"
-            sx={{ mr: 2 }}
+            sx={{
+              ...navStyles,
+              display: isMobile ? "none" : "block",
+              ...(isMobile && { display: "none" }),
+              mr: 2,
+            }}
           >
             <Badge badgeContent={itemCount} color="secondary">
               <ShoppingCart />
@@ -159,13 +188,18 @@ export default function Header({ handleThemeChange, darkMode }: Props) {
                   component={NavLink}
                   to={path}
                   key={path}
-                  sx={navStyles}
+                  sx={{
+                    ...navStyles,
+                    display: isMobile ? "none" : "block",
+                    ...(isMobile && { display: "none" }),
+                  }}
                 >
                   {title.toUpperCase()}
                 </ListItem>
               ))}
             </List>
           )}
+          {isMobile && !user && <LongMenu />}
         </Box>
       </Toolbar>
     </AppBar>
